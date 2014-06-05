@@ -1,3 +1,26 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
+#*.class
+=======
+*.class
+>>>>>>> 53e49e74ce1cda397f52a4f518fc729e2699ec14
+=======
+*.class
+>>>>>>> 53e49e74ce1cda397f52a4f518fc729e2699ec14
+*.settings
+test-output/*
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
 #################
 ## Eclipse
 #################

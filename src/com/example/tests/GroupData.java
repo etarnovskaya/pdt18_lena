@@ -6,7 +6,6 @@ public class GroupData {
 	public String footer;
 
 	public GroupData() {
-		
 	}
 	
 	public GroupData(String groupname, String header, String footer) {
