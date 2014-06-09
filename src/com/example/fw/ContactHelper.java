@@ -24,7 +24,7 @@ public class ContactHelper extends HelperBase{
 		type(By.name("email"), contact.email1);
 		type(By.name("email2"), contact.email2);
 		selectByText(By.name("bday"), contact.bday);
-	    selectByText(By.name("bmonth"), contact.bmonth);
+		selectByText(By.name("bmonth"), contact.bmonth);
 		type(By.name("byear"), contact.byear);
 	    //selectByText(By.name("new_group"), contact.togroup);
 		type(By.name("address2"), contact.address2);
@@ -39,6 +39,28 @@ public class ContactHelper extends HelperBase{
 
 	public void returnToHomePage() {
 		click(By.linkText("home page"));
+	}
+
+	public void openEditContact() {
+		click(By.cssSelector("img[alt='Edit']"));
+	}
+	
+	public void openDetailsContact() {
+		click(By.cssSelector("img[alt='Details']"));
+	}
+
+	public void deleteContact() {
+		click(By.xpath("//input[@value='Delete']")); 
+	}
+
+	public void initModifyContact() {
+		click(By.name("modifiy"));
+		
+	}
+
+	public void updateContact() {
+		click(By.xpath("//input[@value='Update']")); 
+
 	}
 
 	
