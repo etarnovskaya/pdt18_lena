@@ -1,6 +1,6 @@
 package com.example.tests;
 
-public class ContactData {
+public class ContactData implements Comparable<ContactData> {
 	public String firstname;
 	public String lastname;
 	public String address1;
@@ -37,6 +37,59 @@ public class ContactData {
 		this.togroup = togroup;
 		this.address2 = address2;
 		this.homephone2 = homephone2;
+	}
+
+
+
+
+	@Override
+	public String toString() {
+		//return "ContactData [firstname=" + firstname + ", lastname=" + lastname	+ "]";
+		return "ContactData [lastname=" + lastname	+ ", firstname=" + firstname + "]";
+	}
+
+	@Override
+	public int compareTo(ContactData other) {
+		int lastname = this.lastname.toLowerCase().compareTo(other.lastname.toLowerCase());
+		if (lastname != 0) {
+		  return lastname;
+		} else {
+		return this.firstname.toLowerCase().compareTo(other.firstname.toLowerCase());
+		}
+	
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+//		result = prime * result + ((firstname == null) ? 0 : firstname.hashCode());
+//		result = prime * result + ((lastname == null) ? 0 : lastname.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ContactData other = (ContactData) obj;
+		if (firstname == null) {
+			if (other.firstname != null)
+				return false;
+		} 
+		else if (!firstname.equals(other.firstname))
+			return false;
+		if (lastname == null) {
+			if (other.lastname != null)
+			return false;
+		} 
+		else if (!lastname.equals(other.lastname))
+		return false;
+		return true;
 	}
 	
 	

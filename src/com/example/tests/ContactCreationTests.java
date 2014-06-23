@@ -1,16 +1,23 @@
 
 package com.example.tests;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.testng.annotations.Test;
+import static org.testng.Assert.assertEquals;;
 
 public class ContactCreationTests extends TestBase{
   @Test
   public void testNonEmptyContactCreation() throws Exception {
 	app.getNavigationHelper().openMainPage();
+	//old state
+	List<ContactData> oldList = app.getContactHelper().getContacts();
+	//action
     app.getContactHelper().initContactCreation();
     ContactData contact = new ContactData();
-    contact.firstname = "Lena";
-    contact.lastname = "Tarnovsky";
+    contact.firstname = "FAnna";
+    contact.lastname = "ovsky";
     contact.address1 = "Tel Aviv";
     contact.homephone = "56677788";
     contact.mobilephone = "111111111";
@@ -26,29 +33,35 @@ public class ContactCreationTests extends TestBase{
 	app.getContactHelper().fillContactForm(contact);
     app.getContactHelper().submitContactCreation();
     app.getContactHelper().returnToHomePage();
-  }
+   
+	List<ContactData> newList = app.getContactHelper().getContacts();
+//assertEquals(newList.size(), oldList.size() + 1);
+oldList.add(contact);
+Collections.sort(oldList);
+assertEquals(newList, oldList);
+}
   
-  @Test
-  public void testEmptyContactCreation() throws Exception {
-	app.getNavigationHelper().openMainPage();
-    app.getContactHelper().initContactCreation();
-    ContactData contact = new ContactData();
-    contact.firstname = "";
-    contact.lastname = "";
-    contact.address1 = "";
-    contact.homephone = "";
-    contact.mobilephone = "";
-    contact.workphone = "";
-    contact.email1 = "";
-    contact.email2 = "";
-    contact.bday = "-";
-    contact.bmonth = "-";
-    contact.byear = "";
-    contact.togroup = "[none]";
-    contact.address2 = "";
-    contact.homephone2 = "";
-	app.getContactHelper().fillContactForm(contact);
-    app.getContactHelper().submitContactCreation();
-    app.getContactHelper().returnToHomePage();
-  }
+  //@Test
+//  public void testEmptyContactCreation() throws Exception {
+//	app.getNavigationHelper().openMainPage();
+//    app.getContactHelper().initContactCreation();
+//    ContactData contact = new ContactData();
+//    contact.firstname = "";
+//    contact.lastname = "";
+//    contact.address1 = "";
+//    contact.homephone = "";
+//    contact.mobilephone = "";
+//    contact.workphone = "";
+//    contact.email1 = "";
+//    contact.email2 = "";
+//    contact.bday = "-";
+//    contact.bmonth = "-";
+//    contact.byear = "";
+//    contact.togroup = "[none]";
+//    contact.address2 = "";
+//    contact.homephone2 = "";
+//	app.getContactHelper().fillContactForm(contact);
+//    app.getContactHelper().submitContactCreation();
+//    app.getContactHelper().returnToHomePage();
+//  }
 }
