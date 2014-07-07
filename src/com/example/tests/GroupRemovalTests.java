@@ -1,31 +1,28 @@
 package com.example.tests;
-
-import static org.testng.Assert.assertEquals;
-
-import java.util.Collections;
-import java.util.List;
+import static org.junit.Assert.assertThat;
+import static org.hamcrest.Matchers.*;
 import java.util.Random;
 
 import org.testng.annotations.Test;
 
+import com.example.utils.SortedListOf;
+
 public class GroupRemovalTests extends TestBase {
-	@Test
-	public void deleteSomeGroup(){
-		app.getNavigationHelper().openMainPage();
-	    app.getNavigationHelper().gotoGroupPage();
-	    List<GroupData> oldList = app.getGroupHelper().getGroups();
+	@Test(dataProvider = "randomValidGroupGenerator")
+	public void deleteSomeGroup(GroupData group){
+		app.navigateTo().mainPage();
+	    app.navigateTo().groupsPage();
+	    SortedListOf<GroupData> oldList = app.getGroupHelper().getGroups();
 	    
 	    Random rnd = new Random();
 	    int index = rnd.nextInt(oldList.size()-1);
 
-		app.getGroupHelper().deleteGroup(index);
-		
-	    app.getGroupHelper().returntoGroupsPage();
+		app.getGroupHelper()
+		.deleteGroup(index);
 	    
-	    List<GroupData> newList = app.getGroupHelper().getGroups();
-		oldList.remove(index);
-		Collections.sort(oldList);
-		assertEquals(newList, oldList);
+		SortedListOf<GroupData> newList = app.getGroupHelper().getGroups();
+		
+		assertThat(newList, equalTo(oldList.without(index)));
 	}
 
 }

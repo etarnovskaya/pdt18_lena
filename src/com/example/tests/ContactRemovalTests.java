@@ -1,44 +1,48 @@
 package com.example.tests;
+import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertThat;
 
-import static org.testng.Assert.assertEquals;
-
-import java.util.Collections;
-import java.util.List;
+import java.util.Random;
 
 import org.testng.annotations.Test;
-//Deleting contact, using "Details" icon
+
+import com.example.utils.SortedListOf;
+
 public class ContactRemovalTests extends TestBase {
-	@Test
-	public void deleteSomeContactDetails() {
-		
-	app.getNavigationHelper().openMainPage();
-	List<ContactData> oldList = app.getContactHelper().getContacts();
+	@Test(dataProvider = "randomValidContactGenerator")
 	
-	app.getContactHelper().openDetailesContactByIndex(0);
-	app.getContactHelper().initModifyContact();
-	app.getContactHelper().deleteContact();
-	app.getContactHelper().returnToHomePage();
-	List<ContactData> newList = app.getContactHelper().getContacts();
-	oldList.remove(0);
-	Collections.sort(oldList);
-	assertEquals(newList, oldList);
-
-
+	public void deleteSomeContactDetails(ContactData contact) {
+		
+	app.navigateTo().mainPage();
+	SortedListOf<ContactData> oldList = app.getContactHelper().getContacts();
+	Random rnd = new Random();
+    int index = rnd.nextInt(oldList.size()-1);
+	app.getContactHelper()
+		.openDetailesContactByIndex(index)
+		.initModifyContact();
+	app.getContactHelper().deleteContact(contact);
+	
+	SortedListOf<ContactData> newList = app.getContactHelper().getContacts();
+	
+	assertThat(newList, equalTo(oldList.without(contact)));
+	
 }
 	
-	@Test
-	public void deleteSomeContactEdit() {
-		
-	app.getNavigationHelper().openMainPage();
-	List<ContactData> oldList = app.getContactHelper().getContacts();
+	@Test(dataProvider = "randomValidContactGenerator")
 	
-	app.getContactHelper().openEditContactByIndex(0);
-	app.getContactHelper().deleteContact();
-	app.getContactHelper().returnToHomePage();
-	List<ContactData> newList = app.getContactHelper().getContacts();
-	oldList.remove(0);
-	Collections.sort(oldList);
-	assertEquals(newList, oldList);
+	public void deleteSomeContactEdit(ContactData contact) {
+		
+	app.navigateTo().mainPage();
+	SortedListOf<ContactData> oldList = app.getContactHelper().getContacts();
+	Random rnd = new Random();
+    int index = rnd.nextInt(oldList.size()-1);
+	
+    app.getContactHelper()
+		.openEditContactByIndex(index);
+	app.getContactHelper().deleteContact(contact);
+
+	SortedListOf<ContactData> newList = app.getContactHelper().getContacts();
+	assertThat(newList, equalTo(oldList.without(contact)));
 
 	}
 }
