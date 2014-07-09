@@ -103,28 +103,26 @@ public class ContactData implements Comparable<ContactData> {
 
 	@Override
 	public String toString() {
-	
-	//	return "ContactData [firstname=" + firstname	+ ", lastname=" + lastname + "]";
 		return "ContactData [lastname=" + lastname	+ ", firstname=" + firstname + "]";
+	}
+
+	protected String stringForCompare() {
+		StringBuffer sb = new StringBuffer("");
+		sb.append(this.lastname);
+		sb.append(",");
+		sb.append(this.firstname);
+
+		return sb.toString();
 	}
 
 	@Override
 	public int compareTo(ContactData other) {
-		int lastname = this.lastname.toLowerCase().compareTo(other.lastname.toLowerCase());
-		if (lastname != 0) {
-		  return lastname;
-		} else {
-		return this.firstname.toLowerCase().compareTo(other.firstname.toLowerCase());
-		}
-	
+		return this.stringForCompare().toLowerCase().compareTo(other.stringForCompare().toLowerCase());
 	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
 		int result = 1;
-//		result = prime * result + ((firstname == null) ? 0 : firstname.hashCode());
-//		result = prime * result + ((lastname == null) ? 0 : lastname.hashCode());
 		return result;
 	}
 

@@ -53,18 +53,18 @@ public class SortedListOf<T extends Comparable<T>> extends ForwardingList<T> {
   }
 
   public SortedListOf<T> without(T item) {
-    SortedListOf<T> newItems = new SortedListOf<T>();
-    newItems.list = Lists.newArrayList(this.list);
-    newItems.list.remove(item);
-    return newItems;
-  }
+	    SortedListOf<T> newItems = new SortedListOf<T>();
+	    newItems.list = Lists.newArrayList(this.list);
+	    newItems.list.remove(item);
+	    return newItems;
+	  }
 
-  public SortedListOf<T> without(int index) {
-    SortedListOf<T> newItems = new SortedListOf<T>();
-    newItems.list = Lists.newArrayList(this.list);
-    newItems.list.remove(index);
-    return newItems;
-  }
+	  public SortedListOf<T> without(int index) {
+	    SortedListOf<T> newItems = new SortedListOf<T>();
+	    newItems.list = Lists.newArrayList(this.list);
+	    newItems.list.remove(index);
+	    return newItems;
+	  }
 
   public T getSome() {
     if (size() == 0) {

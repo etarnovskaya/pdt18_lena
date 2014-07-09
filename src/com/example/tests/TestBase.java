@@ -3,78 +3,66 @@ package com.example.tests;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
-
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
-
 import com.example.fw.ApplicationManager;
 
+import static com.example.tests.ContactDataGenerator.generateRandomContacts;
+import static com.example.tests.GroupDataGenerator.generateRandomGroups;
 
 
-public class TestBase {
-	protected ApplicationManager app;
+
+public class TestBase 
+{
+	protected static ApplicationManager app;
 
 	@BeforeTest
 	public void setUp() throws Exception {
 		app = new ApplicationManager();
-
-	  }
+	}
 	
 	@AfterTest
 	public void tearDown() throws Exception {
 		app.stop();
-
-	  }
+	}
+	
 	@DataProvider
 	public Iterator<Object[]> randomValidGroupGenerator(){
+		return wrapGroupsForDataProvider(generateRandomGroups(5)).iterator();
+	}
+	
+	private List<Object[]> wrapGroupsForDataProvider(List<GroupData> groups) {
 		List<Object[]> list = new ArrayList<Object[]>();
-		for (int i = 0; i < 5; i++){
-		GroupData group = new GroupData()
-		.withName(generateRandomString())
-		.withHeader(generateRandomString())
-		.withFooter(generateRandomString());
+		for (GroupData group : groups) {
+			list.add(new Object[]{group});
+		}
+		return list;
+	}
 
-		list.add(new Object[]{group});
-		}
-		//.....
-		return list.iterator();
-	}
-	
-	public String generateRandomString(){
-		Random rnd = new Random();
-		if (rnd.nextInt(5) == 0){
-		return "";
-		}
-		else {
-			return "test" + rnd.nextInt();	
-		}
-	}
-	
+		
 	@DataProvider
 	public Iterator<Object[]> randomValidContactGenerator(){
+		return wrapContactsForDataProvider(generateRandomContacts(5)).iterator();
+	}
+
+	private List<Object[]> wrapContactsForDataProvider(List<ContactData> contacts) {
 		List<Object[]> list = new ArrayList<Object[]>();
-		for (int i = 0; i < 3; i++){
-			ContactData contact = new ContactData()
-			.withFirstname(generateRandomString())
-			.withLastname(generateRandomString())
-			.withAddress(generateRandomString())
-			.withHomephone(generateRandomString())
-			.withMobilephone(generateRandomString())
-			.withEmail(generateRandomString())
-			.withEmail2(generateRandomString())
-//			.withBday()
-//			.withbmonth()
-//			.withByear()
-//			.withTogroup()
-			.withAddress2(generateRandomString())
-			.withHomephone2(generateRandomString());
-			
+		for (ContactData contact : contacts) {
 			list.add(new Object[]{contact});
 		}
-		return list.iterator();
+		return list;
 	}
-	
-	
+
+
+//public String generateRandomString(){
+//	Random rnd = new Random();
+//	if (rnd.nextInt(5) == 0){
+//	return "";
+//	}
+//	else {
+//		return "test" + rnd.nextInt();	
+//		}
+//	}
 }
+

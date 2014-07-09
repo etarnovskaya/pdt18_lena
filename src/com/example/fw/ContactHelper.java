@@ -7,11 +7,8 @@ import org.openqa.selenium.WebElement;
 import com.example.tests.ContactData;
 import com.example.utils.SortedListOf;
 
-public class ContactHelper extends HelperBase{
-	
-	public static boolean CREATION = true;
-	public static boolean MODIFICATION = false;
-
+public class ContactHelper extends HelperBase
+{
 	public ContactHelper(ApplicationManager manager) {
 		super(manager);
 	}
@@ -19,9 +16,8 @@ public class ContactHelper extends HelperBase{
 	private SortedListOf<ContactData> cachedContacts;
 
 	public SortedListOf<ContactData> getContacts() {
-		if(cachedContacts == null){
+		if (cachedContacts == null)
 			rebuildCache();
-		}
 		return cachedContacts;
 	}
 
@@ -30,32 +26,26 @@ public class ContactHelper extends HelperBase{
 		manager.navigateTo().mainPage();
 		List<WebElement> rows = driver.findElements(By.xpath("//tr[@name='entry']"));
 		for (WebElement row : rows) {
-		
-		String lastname = row.findElement(By.xpath(".//td[2]")).getText();
-		String firstname = row.findElement(By.xpath(".//td[3]")).getText();
-		
-		cachedContacts.add(new ContactData().withFirstname(firstname).withLastname(lastname));
-		
+			String lastname = row.findElement(By.xpath(".//td[2]")).getText();
+			String firstname = row.findElement(By.xpath(".//td[3]")).getText();
+			cachedContacts.add(new ContactData().withFirstname(firstname).withLastname(lastname));
+		}
 	}
-}
 	
-	public ContactHelper createContact(ContactData contact) {
+	public void createContact(ContactData contact) {
 		manager.navigateTo().mainPage();
 		initContactCreation();
-		fillContactForm(contact, CREATION);
+		fillContactCreationForm(contact);
 		submitContactCreation();
 		returnToHomePage();	
 		rebuildCache();
-		return this;
-
 	}
 	
-	public ContactHelper modifyContact(ContactData contact) {
-		fillContactForm(contact, MODIFICATION);
+	public void modifyContact(ContactData contact) {
+		fillContactModificationForm(contact);
 		clickOnButtonUpdateContact();
 		returnToHomePage();
 		rebuildCache();
-		return this;
 	}
 	
 	public ContactHelper deleteContact(ContactData contact) {
@@ -71,7 +61,7 @@ public class ContactHelper extends HelperBase{
 		return this;
 	}
 	
-	public ContactHelper fillContactForm(ContactData contact, boolean formType) {
+	public void fillContactModificationForm(ContactData contact) {
 		type(By.name("firstname"), contact.getFirstname());
 		type(By.name("lastname"), contact.getLastname());
 		type(By.name("address"), contact.getAddress());
@@ -83,19 +73,15 @@ public class ContactHelper extends HelperBase{
 		selectByText(By.name("bday"), contact.getBday());
 		selectByText(By.name("bmonth"), contact.getBmonth());
 		type(By.name("byear"), contact.getByear());
-		if (formType == CREATION){
-		    selectByText(By.name("new_group"), contact.getTogroup());
-		} else {
-			if (driver.findElements(By.name("new group")).size() != 0){
-				throw new Error ("Groupselector exists in contact modification form");
-			}
-		}
-			
 		type(By.name("address2"), contact.getAddress2());
 		type(By.name("phone2"), contact.getHomephone2());
-		return this;
 	}
 
+	public void fillContactCreationForm(ContactData contact) {
+		fillContactModificationForm(contact);
+		selectByText(By.name("new_group"), contact.getTogroup());
+	}	
+	
 	public ContactHelper submitContactCreation() {
 		click(By.name("submit"));
 		cachedContacts = null;
