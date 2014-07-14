@@ -100,6 +100,8 @@ public class ContactData implements Comparable<ContactData> {
 	public String getAddress() {
 		return address;
 	}
+	
+	
 
 	@Override
 	public String toString() {
@@ -108,9 +110,9 @@ public class ContactData implements Comparable<ContactData> {
 
 	protected String stringForCompare() {
 		StringBuffer sb = new StringBuffer("");
-		sb.append(this.lastname);
-		sb.append(",");
 		sb.append(this.firstname);
+		sb.append(",");
+		sb.append(this.lastname);
 
 		return sb.toString();
 	}
@@ -195,7 +197,25 @@ public class ContactData implements Comparable<ContactData> {
 		return this;
 	}
 
+	public ContactData withBday(String bday) {
+		this.bday = bday;
+		return this;
+	}
+
+	public ContactData withBmonth(String bmonth) {
+		this.bmonth = bmonth;
+		return this;
+	}
+
+	public ContactData withByear(String byear) {
+		this.byear = byear;
+		return this;
+	}
 	
-	
-	
+	public ContactData withTogroup(String togroup) {
+		this.togroup = togroup;
+		return this;
+	}
+
+		
 }

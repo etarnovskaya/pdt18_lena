@@ -28,7 +28,7 @@ public class ContactHelper extends HelperBase
 		for (WebElement row : rows) {
 			String lastname = row.findElement(By.xpath(".//td[2]")).getText();
 			String firstname = row.findElement(By.xpath(".//td[3]")).getText();
-			cachedContacts.add(new ContactData().withFirstname(firstname).withLastname(lastname));
+			cachedContacts.add(new ContactData().withLastname(lastname).withFirstname(firstname));
 		}
 	}
 	
@@ -116,6 +116,7 @@ public class ContactHelper extends HelperBase
 	}
 		
 	public ContactHelper openDetailesContactByIndex(int index) {
+		
 		click(By.xpath("(//img[@alt='Details'])[" + (index + 2) + "]"));
 		return this;
 	}

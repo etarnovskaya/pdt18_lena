@@ -21,9 +21,8 @@ public class GroupHelper extends HelperBase{
 			rebuildCache();
 		}
 		return cachedGroups;
-		
-		
 		}
+	
 	private void rebuildCache() {
 		cachedGroups = new SortedListOf<GroupData>();
 		manager.navigateTo().groupsPage();
@@ -31,10 +30,7 @@ public class GroupHelper extends HelperBase{
 		for (WebElement checkbox : checkboxes) {
 			String title = checkbox.getAttribute("title");
 			String name = title.substring("Select (".length(), title.length() - ")".length());
-			cachedGroups.add(new GroupData().withName(name));
-
-			;
-			
+			cachedGroups.add(new GroupData().withName(name));		
 		}
 	}
 	public GroupHelper createGroup(GroupData group) {

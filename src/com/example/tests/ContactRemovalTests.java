@@ -15,8 +15,10 @@ public class ContactRemovalTests extends TestBase {
 		
 	app.navigateTo().mainPage();
 	SortedListOf<ContactData> oldList = app.getContactHelper().getContacts();
+	
 	Random rnd = new Random();
     int index = rnd.nextInt(oldList.size()-1);
+    
 	app.getContactHelper()
 		.openDetailesContactByIndex(index)
 		.initModifyContact();
